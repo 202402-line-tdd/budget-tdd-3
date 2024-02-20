@@ -34,18 +34,21 @@ class BudgetService {
     overlappingDays(budget, startDate, endDate) {
         let overlappingEnd;
         let overlappingStart;
-        if (budget.yearMonth === startDate.format("YYYYMM")) {
+        let startDate1 = startDate;
+        let endDate1 = endDate;
+        if (budget.yearMonth === startDate1.format("YYYYMM")) {
             overlappingEnd = budget.lastDay();
-            overlappingStart = startDate;
-        } else if (budget.yearMonth === endDate.format("YYYYMM")) {
-            overlappingEnd = endDate;
-            overlappingStart = budget.firstDay();
+            overlappingStart = startDate1;
         } else {
-            overlappingEnd = budget.lastDay();
-            overlappingStart = budget.firstDay();
+            if (budget.yearMonth === endDate1.format("YYYYMM")) {
+                overlappingEnd = endDate1;
+                overlappingStart = budget.firstDay();
+            } else {
+                overlappingEnd = budget.lastDay();
+                overlappingStart = budget.firstDay();
+            }
         }
-        let overlappingDays = overlappingEnd.diff(overlappingStart, 'days') + 1;
-        return overlappingDays;
+        return overlappingEnd.diff(overlappingStart, 'days') + 1;
     }
 
     getAll() {
