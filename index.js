@@ -13,13 +13,6 @@ class BudgetService {
             return 0;
         }
 
-        // const startMonthDays = startDate.daysInMonth();
-        //
-        // const filterBudgets = this.getAll().filter((budget) => {
-        //     const yearMonth = dayjs(budget.yearMonth);
-        //     return yearMonth.isBetween(startDate, endDate, "month", "[]");
-        // });
-
         const period = new Period(startDate, endDate);
         return this.getAll()
             .map((budget) => {
