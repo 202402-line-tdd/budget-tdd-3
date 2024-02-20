@@ -23,10 +23,6 @@ class BudgetService {
         const period = new Period(startDate, endDate);
         return filterBudgets
             .map((budget) => {
-                if (startDate.format("YYYYMM") === endDate.format("YYYYMM")) {
-                    let overlappingDays = endDate.diff(startDate, "days") + 1;
-                    return budget.dailyAmount() * overlappingDays;
-                }
                 return budget.overlappingAmount(period);
             })
             .reduce((sum, current) => (sum + current), 0);
