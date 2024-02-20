@@ -23,7 +23,7 @@ class BudgetService {
 
         return filterBudgets
             .map((budget) => {
-                const daysInMonth = dayjs(budget.yearMonth).daysInMonth();
+                const daysInMonth = this.days(budget);
 
                 if (startMonth === endMonth) {
                     return (budget.amount / daysInMonth) * (endDate.diff(startDate, "days") + 1);
@@ -39,6 +39,10 @@ class BudgetService {
                 }
             })
             .reduce((sum, current) => (sum + current), 0);
+    }
+
+    days(budget) {
+        return dayjs(budget.yearMonth).daysInMonth();
     }
 
     getAll() {
