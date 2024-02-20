@@ -20,13 +20,13 @@ class BudgetService {
             return yearMonth.isBetween(startDate, endDate, "month", "[]");
         });
 
+        const period = new Period(startDate, endDate);
         return filterBudgets
             .map((budget) => {
                 if (startDate.format("YYYYMM") === endDate.format("YYYYMM")) {
                     let overlappingDays = endDate.diff(startDate, "days") + 1;
                     return budget.dailyAmount() * overlappingDays;
                 }
-                const period = new Period(startDate, endDate);
                 return budget.overlappingAmount(period);
             })
             .reduce((sum, current) => (sum + current), 0);
