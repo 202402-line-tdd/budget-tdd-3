@@ -14,17 +14,17 @@ class Period {
     }
 
     overlappingDays(budget) {
-        let overlappingEnd;
+        let overlappingEnd = this.endDate.isBefore(budget.lastDay()) ? this.endDate : budget.lastDay();
         let overlappingStart;
         if (budget.yearMonth === this.startDate.format("YYYYMM")) {
-            overlappingEnd = budget.lastDay();
+            // overlappingEnd = budget.lastDay();
             overlappingStart = this.startDate;
         } else {
             if (budget.yearMonth === this.endDate.format("YYYYMM")) {
-                overlappingEnd = this.endDate;
+                // overlappingEnd = this.endDate;
                 overlappingStart = budget.firstDay();
             } else {
-                overlappingEnd = budget.lastDay();
+                // overlappingEnd = budget.lastDay();
                 overlappingStart = budget.firstDay();
             }
         }
