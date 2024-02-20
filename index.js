@@ -23,17 +23,15 @@ class BudgetService {
 
         return filterBudgets
             .map((budget) => {
-                const daysInMonth = budget.days();
-
                 if (startMonth === endMonth) {
-                    return (budget.amount / daysInMonth) * (endDate.diff(startDate, "days") + 1);
+                    return (budget.amount / budget.days()) * (endDate.diff(startDate, "days") + 1);
                 }
 
                 if (budget.yearMonth === startMonth) {
                     const startDays = startMonthDays - startDate.get("date") + 1;
-                    return (budget.amount / daysInMonth) * startDays;
+                    return (budget.amount / budget.days()) * startDays;
                 } else if (budget.yearMonth === endMonth) {
-                    return (budget.amount / daysInMonth) * endDate.get("date");
+                    return (budget.amount / budget.days()) * endDate.get("date");
                 } else {
                     return budget.amount;
                 }
