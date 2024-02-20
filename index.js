@@ -28,17 +28,18 @@ class BudgetService {
                     return budget.dailyAmount() * overlappingDays;
                 }
 
+                let overlappingDays;
                 if (budget.yearMonth === startMonth) {
-                    const overlappingDays = startMonthDays - startDate.get("date") + 1;
-                    return budget.dailyAmount() * overlappingDays;
+                    overlappingDays = startMonthDays - startDate.get("date") + 1;
+                    // return budget.dailyAmount() * overlappingDays;
                 } else if (budget.yearMonth === endMonth) {
-                    let overlappingDays = endDate.get("date");
-                    return budget.dailyAmount() * overlappingDays;
+                    overlappingDays = endDate.get("date");
+                    // return budget.dailyAmount() * overlappingDays;
                 } else {
-                    let overlappingDays = budget.days();
-                    return budget.dailyAmount() * overlappingDays;
-                    // return budget.amount;
+                    overlappingDays = budget.days();
+                    // return budget.dailyAmount() * overlappingDays;
                 }
+                return budget.dailyAmount() * overlappingDays;
             })
             .reduce((sum, current) => (sum + current), 0);
     }
