@@ -1,4 +1,5 @@
 const dayjs = require("dayjs");
+const Period = require("./Period");
 
 class Budget {
     constructor(yearMonth, amount) {
@@ -24,6 +25,9 @@ class Budget {
 
     lastDay() {
         return this.getYearMonth().endOf('month');
+    }
+    createPeriod() {
+        return new Period(this.firstDay(), this.lastDay());
     }
 }
 
