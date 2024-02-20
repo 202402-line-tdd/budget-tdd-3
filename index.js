@@ -13,7 +13,7 @@ class Period {
         this.endDate = endDate;
     }
 
-    overlappingDays(budget, another) {
+    overlappingDays(another) {
         let overlappingEnd = this.endDate.isBefore(another.endDate) ? this.endDate : another.endDate;
         let overlappingStart = this.startDate.isAfter(another.startDate) ? this.startDate : another.startDate;
         return overlappingEnd.diff(overlappingStart, 'days') + 1;
@@ -44,7 +44,7 @@ class BudgetService {
                 }
                 const period = new Period(startDate, endDate);
                 const another = new Period(budget.firstDay(), budget.lastDay());
-                let overlappingDays = period.overlappingDays(budget, another);
+                let overlappingDays = period.overlappingDays(another);
                 return budget.dailyAmount() * overlappingDays;
             })
             .reduce((sum, current) => (sum + current), 0);
