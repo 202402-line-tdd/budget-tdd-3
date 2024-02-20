@@ -4,6 +4,16 @@ const isBetween = require("dayjs/plugin/isBetween");
 
 dayjs.extend(isBetween);
 
+class Period {
+    startDate;
+    endDate;
+    constructor(startDate, endDate) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+}
+
 class BudgetService {
     query(start, end) {
         const startDate = dayjs(start);
@@ -32,6 +42,7 @@ class BudgetService {
     }
 
     overlappingDays(budget, startDate, endDate) {
+        const period = new Period(startDate, endDate);
         let overlappingEnd;
         let overlappingStart;
         let startDate1 = startDate;
