@@ -7,6 +7,7 @@ dayjs.extend(isBetween);
 class Period {
     startDate;
     endDate;
+
     constructor(startDate, endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
@@ -45,8 +46,8 @@ class BudgetService {
         const period = new Period(startDate, endDate);
         let overlappingEnd;
         let overlappingStart;
-        let startDate1 = startDate;
-        let endDate1 = endDate;
+        let startDate1 = period.startDate;
+        let endDate1 = period.endDate;
         if (budget.yearMonth === startDate1.format("YYYYMM")) {
             overlappingEnd = budget.lastDay();
             overlappingStart = startDate1;
