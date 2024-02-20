@@ -5,11 +5,22 @@ class Budget {
         this.yearMonth = yearMonth;
         this.amount = amount;
     }
+
     days() {
-        return dayjs(this.yearMonth).daysInMonth();
+        return this.getYearMonth().daysInMonth();
     }
+
+    getYearMonth() {
+        return dayjs(this.yearMonth);
+    }
+
     dailyAmount() {
         return this.amount / this.days();
     }
+
+    firstDay() {
+        return this.getYearMonth();
+    }
 }
+
 module.exports = Budget;
