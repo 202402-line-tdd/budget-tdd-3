@@ -8,5 +8,8 @@ class Budget {
     days() {
         return dayjs(this.yearMonth).daysInMonth();
     }
+    dailyAmount() {
+        return this.amount / this.days();
+    }
 }
 module.exports = Budget;
