@@ -12,8 +12,6 @@ class BudgetService {
             return 0;
         }
 
-        const startMonth = startDate.format("YYYYMM");
-        const endMonth = endDate.format("YYYYMM");
         // const startMonthDays = startDate.daysInMonth();
 
         const filterBudgets = this.getAll().filter((budget) => {
@@ -23,17 +21,17 @@ class BudgetService {
 
         return filterBudgets
             .map((budget) => {
-                if (startMonth === endMonth) {
+                if (startDate.format("YYYYMM") === endDate.format("YYYYMM")) {
                     let overlappingDays = endDate.diff(startDate, "days") + 1;
                     return budget.dailyAmount() * overlappingDays;
                 }
 
                 let overlappingEnd;
                 let overlappingStart;
-                if (budget.yearMonth === startMonth) {
+                if (budget.yearMonth === startDate.format("YYYYMM")) {
                     overlappingEnd = budget.lastDay();
                     overlappingStart = startDate;
-                } else if (budget.yearMonth === endMonth) {
+                } else if (budget.yearMonth === endDate.format("YYYYMM")) {
                     overlappingEnd = endDate;
                     overlappingStart = budget.firstDay();
                 } else {
