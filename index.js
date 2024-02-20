@@ -31,11 +31,11 @@ class BudgetService {
                 let overlappingDays;
                 if (budget.yearMonth === startMonth) {
                     overlappingDays = budget.lastDay().diff(startDate, 'days') + 1;
-                    // overlappingDays = startMonthDays - startDate.get("date") + 1;
                 } else if (budget.yearMonth === endMonth) {
                     overlappingDays = endDate.diff(budget.firstDay(), 'days') + 1;
                 } else {
-                    overlappingDays = budget.days();
+                    overlappingDays = budget.lastDay().diff(budget.firstDay(), 'days') + 1;
+                    // overlappingDays = budget.days();
                 }
                 return budget.dailyAmount() * overlappingDays;
             })
