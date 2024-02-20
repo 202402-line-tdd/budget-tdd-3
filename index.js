@@ -24,16 +24,20 @@ class BudgetService {
         return filterBudgets
             .map((budget) => {
                 if (startMonth === endMonth) {
-                    return budget.dailyAmount() * (endDate.diff(startDate, "days") + 1);
+                    let overlappingDays = endDate.diff(startDate, "days") + 1;
+                    return budget.dailyAmount() * overlappingDays;
                 }
 
                 if (budget.yearMonth === startMonth) {
-                    const startDays = startMonthDays - startDate.get("date") + 1;
-                    return budget.dailyAmount() * startDays;
+                    const overlappingDays = startMonthDays - startDate.get("date") + 1;
+                    return budget.dailyAmount() * overlappingDays;
                 } else if (budget.yearMonth === endMonth) {
-                    return budget.dailyAmount() * endDate.get("date");
+                    let overlappingDays = endDate.get("date");
+                    return budget.dailyAmount() * overlappingDays;
                 } else {
-                    return budget.amount;
+                    let overlappingDays = budget.days();
+                    return budget.dailyAmount() * overlappingDays;
+                    // return budget.amount;
                 }
             })
             .reduce((sum, current) => (sum + current), 0);
