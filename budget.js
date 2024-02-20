@@ -21,6 +21,10 @@ class Budget {
     firstDay() {
         return this.getYearMonth();
     }
+
+    lastDay() {
+        return this.getYearMonth().endOf('month');
+    }
 }
 
 module.exports = Budget;
