@@ -43,11 +43,15 @@ class BudgetService {
                     return budget.dailyAmount() * overlappingDays;
                 }
                 const period = new Period(startDate, endDate);
-                const another = new Period(budget.firstDay(), budget.lastDay());
+                const another = this.createPeriod(budget);
                 let overlappingDays = period.overlappingDays(another);
                 return budget.dailyAmount() * overlappingDays;
             })
             .reduce((sum, current) => (sum + current), 0);
+    }
+
+    createPeriod(budget) {
+        return new Period(budget.firstDay(), budget.lastDay());
     }
 
     getAll() {
