@@ -13,6 +13,24 @@ class Period {
         this.endDate = endDate;
     }
 
+    overlappingDays(budget) {
+        let overlappingEnd;
+        let overlappingStart;
+        if (budget.yearMonth === this.startDate.format("YYYYMM")) {
+            overlappingEnd = budget.lastDay();
+            overlappingStart = this.startDate;
+        } else {
+            if (budget.yearMonth === this.endDate.format("YYYYMM")) {
+                overlappingEnd = this.endDate;
+                overlappingStart = budget.firstDay();
+            } else {
+                overlappingEnd = budget.lastDay();
+                overlappingStart = budget.firstDay();
+            }
+        }
+        return overlappingEnd.diff(overlappingStart, 'days') + 1;
+    }
+
 }
 
 class BudgetService {
@@ -37,28 +55,10 @@ class BudgetService {
                     return budget.dailyAmount() * overlappingDays;
                 }
                 const period = new Period(startDate, endDate);
-                let overlappingDays = this.overlappingDays(budget, period);
+                let overlappingDays = period.overlappingDays(budget);
                 return budget.dailyAmount() * overlappingDays;
             })
             .reduce((sum, current) => (sum + current), 0);
-    }
-
-    overlappingDays(budget, period) {
-        let overlappingEnd;
-        let overlappingStart;
-        if (budget.yearMonth === period.startDate.format("YYYYMM")) {
-            overlappingEnd = budget.lastDay();
-            overlappingStart = period.startDate;
-        } else {
-            if (budget.yearMonth === period.endDate.format("YYYYMM")) {
-                overlappingEnd = period.endDate;
-                overlappingStart = budget.firstDay();
-            } else {
-                overlappingEnd = budget.lastDay();
-                overlappingStart = budget.firstDay();
-            }
-        }
-        return overlappingEnd.diff(overlappingStart, 'days') + 1;
     }
 
     getAll() {
