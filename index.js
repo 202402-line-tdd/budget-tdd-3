@@ -24,19 +24,23 @@ class BudgetService {
         return filterBudgets
             .map((budget) => {
                 if (startMonth === endMonth) {
-                    return (budget.amount / budget.days()) * (endDate.diff(startDate, "days") + 1);
+                    return this.dailyAmount(budget) * (endDate.diff(startDate, "days") + 1);
                 }
 
                 if (budget.yearMonth === startMonth) {
                     const startDays = startMonthDays - startDate.get("date") + 1;
-                    return (budget.amount / budget.days()) * startDays;
+                    return this.dailyAmount(budget) * startDays;
                 } else if (budget.yearMonth === endMonth) {
-                    return (budget.amount / budget.days()) * endDate.get("date");
+                    return this.dailyAmount(budget) * endDate.get("date");
                 } else {
                     return budget.amount;
                 }
             })
             .reduce((sum, current) => (sum + current), 0);
+    }
+
+    dailyAmount(budget) {
+        return budget.amount / budget.days();
     }
 
     getAll() {
