@@ -14,14 +14,14 @@ class BudgetService {
         }
 
         // const startMonthDays = startDate.daysInMonth();
-
-        const filterBudgets = this.getAll().filter((budget) => {
-            const yearMonth = dayjs(budget.yearMonth);
-            return yearMonth.isBetween(startDate, endDate, "month", "[]");
-        });
+        //
+        // const filterBudgets = this.getAll().filter((budget) => {
+        //     const yearMonth = dayjs(budget.yearMonth);
+        //     return yearMonth.isBetween(startDate, endDate, "month", "[]");
+        // });
 
         const period = new Period(startDate, endDate);
-        return filterBudgets
+        return this.getAll()
             .map((budget) => {
                 return budget.overlappingAmount(period);
             })
